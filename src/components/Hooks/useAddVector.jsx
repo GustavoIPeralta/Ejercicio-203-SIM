@@ -16,7 +16,7 @@ const useAddVector = () => {
   const getSimulation = async () => {
     let copyVectors = vectores.slice();
 
-    for (let i = 0; i < 15; i++) {
+    for (let i = 0; i < 20; i++) {
       let newVector = await addNewVector(copyVectors);
 
       copyVectors.push(newVector);
