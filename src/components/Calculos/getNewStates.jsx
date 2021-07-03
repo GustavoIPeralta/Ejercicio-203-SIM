@@ -20,16 +20,44 @@ export const getNewEstados = async (tipoTrabajo, lastVector, copyVectors) => {
 
       if (isFinish) {
         //Alguna prensa o las dos se liberan en este nuevo vector
-
-        //Estado de las prensas en el nuevo vector
-        newStatePrensas.prensa1 =
-          Number(copyVectors.length) >= Number(lastVector.tiempoImpresion.fin1)
-            ? "Libre"
-            : "Ocupada";
-        newStatePrensas.prensa2 =
+        let stateFree =
+          Number(copyVectors.length) >=
+            Number(lastVector.tiempoImpresion.fin1) &&
           Number(copyVectors.length) >= Number(lastVector.tiempoImpresion.fin2)
-            ? "Libre"
-            : "Ocupada";
+            ? true
+            : false;
+
+        let prensaToAssign =
+          Number(copyVectors.length) >= Number(lastVector.tiempoImpresion.fin1)
+            ? 1
+            : 2;
+        //Estado de las prensas en el nuevo vector
+
+        newStatePrensas.prensa1 = stateFree
+          ? "Ocupada"
+          : prensaToAssign === 1
+          ? "Ocupada"
+          : Number(copyVectors.length) >=
+            Number(lastVector.tiempoImpresion.fin1)
+          ? "Libre"
+          : lastVector.estados.prensa1;
+
+        newStatePrensas.prensa2 = stateFree
+          ? "Ocupada"
+          : prensaToAssign === 2
+          ? "Ocupada"
+          : Number(copyVectors.length) >=
+            Number(lastVector.tiempoImpresion.fin2)
+          ? "Libre"
+          : lastVector.estados.prensa2;
+        // newStatePrensas.prensa1 =
+        //   Number(copyVectors.length) >= Number(lastVector.tiempoImpresion.fin1)
+        //     ? "Libre"
+        //     : "Ocupada";
+        // newStatePrensas.prensa2 =
+        //   Number(copyVectors.length) >= Number(lastVector.tiempoImpresion.fin2)
+        //     ? "Libre"
+        //     : "Ocupada";
       } else {
         newStatePrensas.prensa1 = "Ocupada";
         newStatePrensas.prensa2 = "Ocupada";

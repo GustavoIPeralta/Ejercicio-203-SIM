@@ -1,6 +1,12 @@
 import { getTiempoImpresion } from "../../utils/utils";
 
-export const getNewImpresion = async (tipoTrabajo, lastVector, copyVectors) => {
+export const getNewImpresion = async (
+  tipoTrabajo,
+  lastVector,
+  copyVectors,
+  aleatorios,
+  i
+) => {
   let stateOccupied =
     lastVector.estados.prensa1 === "Ocupada" &&
     lastVector.estados.prensa2 === "Ocupada"
@@ -15,9 +21,9 @@ export const getNewImpresion = async (tipoTrabajo, lastVector, copyVectors) => {
   console.log(stateOccupied);
 
   if (tipoTrabajo !== "No hay trabajo") {
-    // alert("Hay trabajo");
+    alert("Hay trabajo");
     if (stateOccupied) {
-      // alert("Prensas ocupadas");
+      alert("Prensas ocupadas");
       //Llegó un trabajo y las dos prensas en el día anterior estaban ocupadas. Tengo que ver si alguna prensa en este día se desocupó.
 
       //Valor que determina si algún trabajo anterior ya terminó
@@ -28,25 +34,51 @@ export const getNewImpresion = async (tipoTrabajo, lastVector, copyVectors) => {
           : false;
 
       if (isFinish) {
-        // alert("Alguna se desocupa ahora");
+        alert("Alguna se desocupa ahora");
         //Alguna prensa o las dos se liberan en este nuevo vector
+        let stateFree =
+          Number(copyVectors.length) >=
+            Number(lastVector.tiempoImpresion.fin1) &&
+          Number(copyVectors.length) >= Number(lastVector.tiempoImpresion.fin2)
+            ? true
+            : false;
+
         prensaToAssign =
           Number(copyVectors.length) >= Number(lastVector.tiempoImpresion.fin1)
             ? 1
             : 2;
-        // alert(prensaToAssign);
+        alert(prensaToAssign);
         //Estado de las prensas en el nuevo vector
-        newStatePrensas.prensa1 =
-          Number(copyVectors.length) >= Number(lastVector.tiempoImpresion.fin1)
-            ? "Libre"
-            : "Ocupada";
-        newStatePrensas.prensa2 =
-          Number(copyVectors.length) >= Number(lastVector.tiempoImpresion.fin2)
-            ? "Libre"
-            : "Ocupada";
+
+        newStatePrensas.prensa1 = stateFree
+          ? "Ocupada"
+          : prensaToAssign === 1
+          ? "Ocupada"
+          : Number(copyVectors.length) >=
+            Number(lastVector.tiempoImpresion.fin1)
+          ? "Libre"
+          : lastVector.estados.prensa1;
+
+        newStatePrensas.prensa2 = stateFree
+          ? "Ocupada"
+          : prensaToAssign === 2
+          ? "Ocupada"
+          : Number(copyVectors.length) >=
+            Number(lastVector.tiempoImpresion.fin2)
+          ? "Libre"
+          : lastVector.estados.prensa2;
+
+        // newStatePrensas.prensa1 =
+        //   Number(copyVectors.length) >= Number(lastVector.tiempoImpresion.fin1)
+        //     ? "Libre"
+        //     : "Ocupada";
+        // newStatePrensas.prensa2 =
+        //   Number(copyVectors.length) >= Number(lastVector.tiempoImpresion.fin2)
+        //     ? "Libre"
+        //     : "Ocupada";
         console.log(newStatePrensas);
       } else {
-        // alert("Ninguna se desocupa");
+        alert("Ninguna se desocupa");
         newStatePrensas.prensa1 = "Ocupada";
         newStatePrensas.prensa2 = "Ocupada";
       }
@@ -120,8 +152,8 @@ export const getNewImpresion = async (tipoTrabajo, lastVector, copyVectors) => {
   if (prensaToAssign) {
     let newTipoTrabajo =
       tipoTrabajo === "Tipo 1" ? 1 : tipoTrabajo === "Tipo 2" ? 2 : null;
-    rndImpresion = Math.random().toFixed(2);
-    // rndImpresion = aleatorios.tiempo[i];
+    // rndImpresion = Math.random().toFixed(2);
+    rndImpresion = aleatorios.tiempo[i];
     tiempoImpresion = getTiempoImpresion(rndImpresion);
     return {
       rnd: rndImpresion,
