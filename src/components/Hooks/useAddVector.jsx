@@ -16,7 +16,11 @@ const useAddVector = () => {
   const getSimulation = async () => {
     let copyVectors = vectores.slice();
 
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 20; i++) {
+      // let aleatorios = {
+      //   tipo: [0.3, 0.52, 0.5, 0.9, 0.9],
+      //   tiempo: [0.1, 0.05, 0.1, 0.8, 0.5],
+      // };
       let newVector = await addNewVector(copyVectors);
 
       copyVectors.push(newVector);
@@ -28,6 +32,7 @@ const useAddVector = () => {
     let lastVector = [...copyVectors].pop();
 
     let rndTipo = Math.random().toFixed(2);
+    // let rndTipo = aleatorios.tipo[i];
     let tipoTrabajo = getTipoTrabajo(rndTipo);
 
     //Nuevos datos
@@ -49,6 +54,7 @@ const useAddVector = () => {
       estados: newEstados,
       utilidad: newUtilidad,
     };
+
     return newData;
   };
 
