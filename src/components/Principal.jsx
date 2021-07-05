@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { Grid, Card, Button } from "@material-ui/core";
+import { Grid, Button } from "@material-ui/core";
 import ReportTable from "./Report/ReportTable";
 import useAddVector from "./Hooks/useAddVector";
+import DataEjercicio from "../data";
 import { initialData } from "../utils/utils";
 
 export default function Principal({}) {
   const [columns, setColumns] = useState([
     "t",
     "Llegada trabajo",
-    "Tiempo impresión",
+    "Fin impresión",
     "Prensa 1",
     "Prensa 2",
     "Utilidad",
@@ -27,6 +28,12 @@ export default function Principal({}) {
   ]);
   const { vectores, loading, getSimulation, setVectores } = useAddVector();
   const [generateSimulacion, setGenerateSimulacion] = useState(false);
+  const [distribImpresion, setDistribImpresion] = useState({ min: 2, max: 5 });
+  const [tiposTrabajos, setTiposTrabajos] = useState([
+    { id: 0, tipo: "TIPO 1", prob: 0.5, precio: 400 },
+    { id: 1, tipo: "TIPO 2", prob: 0.2, precio: 200 },
+    { id: 2, tipo: "SIN TRABAJO", prob: 0.3, precio: null },
+  ]);
 
   useEffect(() => {
     if (generateSimulacion) {
@@ -41,20 +48,12 @@ export default function Principal({}) {
         <span>EJERCICIO 203</span>
       </Grid>
 
-      <Grid item xs={12} style={{ textAlign: "center" }}>
-        <Grid container spacing={2}>
-          <Grid item xs={6}>
-            <Card>
-              <span>Objetos</span>
-            </Card>
-          </Grid>
-          <Grid item xs={6}>
-            <Card>
-              <span>Eventos</span>
-            </Card>
-          </Grid>
-        </Grid>
-      </Grid>
+      <DataEjercicio
+        distribImpresion={distribImpresion}
+        setDistribImpresion={setDistribImpresion}
+        tiposTrabajos={tiposTrabajos}
+        setTiposTrabajos={setTiposTrabajos}
+      />
 
       <Grid item xs={12} style={{ textAlign: "center" }}>
         <Button

@@ -10,7 +10,7 @@ const HeaderReportTable = ({ columns, subColumns }) => {
       case "Llegada trabajo":
         return 2;
         break;
-      case "Tiempo impresión":
+      case "Fin impresión":
         return 4;
         break;
       case "Utilidad":
