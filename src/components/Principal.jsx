@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Grid, Button } from "@material-ui/core";
+import { Grid, Button, Checkbox } from "@material-ui/core";
 import ReportTable from "./Report/ReportTable";
 import useAddVector from "./Hooks/useAddVector";
 import DataEjercicio from "../data";
@@ -35,10 +35,11 @@ export default function Principal({}) {
     { id: 2, tipo: "SIN TRABAJO", prob: 0.3, precio: null },
   ]);
   const [diasSim, setDiasSim] = useState(100);
+  const [aceptTipo2, setAceptTipo2] = useState(true);
 
   useEffect(() => {
     if (generateSimulacion) {
-      getSimulation(distribImpresion, tiposTrabajos, diasSim);
+      getSimulation(distribImpresion, tiposTrabajos, diasSim, aceptTipo2);
       setGenerateSimulacion(false);
     }
   }, [generateSimulacion]);
@@ -63,7 +64,15 @@ export default function Principal({}) {
           style={{ width: "5%", textAlign: "center" }}
           onChange={(e) => setDiasSim(Number(e.target.value))}
         ></input>
+        <label> semanas</label>
         <br></br>
+        <label>Acepta tipo 2: </label>
+        <Checkbox
+          checked={aceptTipo2}
+          color="default"
+          onChange={() => setAceptTipo2(!aceptTipo2)}
+          inputProps={{ "aria-label": "secondary checkbox" }}
+        />
         <br></br>
         <Button
           variant="contained"
