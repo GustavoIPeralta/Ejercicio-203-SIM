@@ -43,7 +43,7 @@ export const getNewEstados = async (tipoTrabajo, lastVector, copyVectors) => {
           : lastVector.estados.prensa1;
 
         newStatePrensas.prensa2 = stateFree
-          ? "Ocupada"
+          ? "Libre"
           : prensaToAssign === 2
           ? "Ocupada"
           : Number(copyVectors.length) >=

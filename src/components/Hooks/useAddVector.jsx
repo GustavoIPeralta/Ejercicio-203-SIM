@@ -17,31 +17,24 @@ const useAddVector = () => {
     let copyVectors = vectores.slice();
 
     for (let i = 0; i < 20; i++) {
-      let aleatorios = {
-        tipo: [0.24, 0.9, 0.21, 0.73, 0.21, 0.82, 0.43, 0.05, 0.12],
-        tiempo: [0.26, 0.1, 0.87, 0.1, 0.33, 0.1, 0.1, 0.65, 0.1],
-      };
-      let newVector = await addNewVector(copyVectors, aleatorios, i);
+      let newVector = await addNewVector(copyVectors);
 
       copyVectors.push(newVector);
     }
     setVectores(copyVectors);
   };
 
-  const addNewVector = async (copyVectors, aleatorios, i) => {
+  const addNewVector = async (copyVectors) => {
     let lastVector = [...copyVectors].pop();
 
-    // let rndTipo = Math.random().toFixed(2);
-    let rndTipo = aleatorios.tipo[i];
+    let rndTipo = Math.random().toFixed(2);
     let tipoTrabajo = getTipoTrabajo(rndTipo);
 
     //Nuevos datos
     let newImpresion = await getNewImpresion(
       tipoTrabajo,
       lastVector,
-      copyVectors,
-      aleatorios,
-      i
+      copyVectors
     );
 
     let newEstados = await getNewEstados(tipoTrabajo, lastVector, copyVectors);
