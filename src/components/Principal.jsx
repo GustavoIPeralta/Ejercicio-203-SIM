@@ -34,10 +34,11 @@ export default function Principal({}) {
     { id: 1, tipo: "TIPO 2", prob: 0.2, precio: 200 },
     { id: 2, tipo: "SIN TRABAJO", prob: 0.3, precio: null },
   ]);
+  const [diasSim, setDiasSim] = useState(100);
 
   useEffect(() => {
     if (generateSimulacion) {
-      getSimulation();
+      getSimulation(distribImpresion, tiposTrabajos, diasSim);
       setGenerateSimulacion(false);
     }
   }, [generateSimulacion]);
@@ -56,6 +57,14 @@ export default function Principal({}) {
       />
 
       <Grid item xs={12} style={{ textAlign: "center" }}>
+        <label>Simulación: </label>
+        <input
+          value={diasSim}
+          style={{ width: "5%", textAlign: "center" }}
+          onChange={(e) => setDiasSim(Number(e.target.value))}
+        ></input>
+        <br></br>
+        <br></br>
         <Button
           variant="contained"
           color="primary"

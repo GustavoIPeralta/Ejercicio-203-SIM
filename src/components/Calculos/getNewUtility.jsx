@@ -1,6 +1,10 @@
 import { getUtilidadTrabajo } from "../../utils/utils";
 
-export const getNewUtilidad = async (lastVector, copyVectors) => {
+export const getNewUtilidad = async (
+  lastVector,
+  copyVectors,
+  tiposTrabajos
+) => {
   //Solo hay una utilidad diaria si hay un cambio de estado de Ocupada a Libre
 
   let stateFree =
@@ -20,14 +24,14 @@ export const getNewUtilidad = async (lastVector, copyVectors) => {
       lastVector.estados.prensa1 === "Libre"
         ? 0
         : Number(copyVectors.length) >= Number(lastVector.tiempoImpresion.fin1)
-        ? getUtilidadTrabajo(lastVector.tiempoImpresion.tipoFin1)
+        ? getUtilidadTrabajo(lastVector.tiempoImpresion.tipoFin1, tiposTrabajos)
         : 0;
 
     let utilityPrensa2 =
       lastVector.estados.prensa2 === "Libre"
         ? 0
         : Number(copyVectors.length) >= Number(lastVector.tiempoImpresion.fin2)
-        ? getUtilidadTrabajo(lastVector.tiempoImpresion.tipoFin2)
+        ? getUtilidadTrabajo(lastVector.tiempoImpresion.tipoFin2, tiposTrabajos)
         : 0;
 
     newDailyUtility = Number(utilityPrensa1) + Number(utilityPrensa2);

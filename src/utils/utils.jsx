@@ -16,11 +16,21 @@ export const initialData = [
   },
 ];
 
-export const getTipoTrabajo = (rnd) => {
-  if (rnd >= 0 && rnd < 0.5) {
+export const getTipoTrabajo = (rnd, tiposTrabajos) => {
+  let probInter = Number(
+    (
+      Number(Number(tiposTrabajos[0].prob).toFixed(2)) +
+      Number(Number(tiposTrabajos[1].prob).toFixed(2))
+    ).toFixed(2)
+  );
+
+  if (rnd >= 0 && rnd < Number(Number(tiposTrabajos[0].prob).toFixed(2))) {
     return "Tipo 1";
   } else {
-    if (rnd >= 0.5 && rnd < 0.7) {
+    if (
+      rnd >= Number(Number(tiposTrabajos[0].prob).toFixed(2)) &&
+      rnd < probInter
+    ) {
       return "Tipo 2";
     } else {
       return "No hay trabajo";
@@ -28,16 +38,17 @@ export const getTipoTrabajo = (rnd) => {
   }
 };
 
-export const getTiempoImpresion = (rnd) => {
-  return (rnd * 3 + 2).toFixed(2);
+export const getTiempoImpresion = (rnd, min, max) => {
+  let dif = Number(max) - Number(min);
+  return (rnd * dif + Number(min)).toFixed(2);
 };
 
-export const getUtilidadTrabajo = (tipo) => {
+export const getUtilidadTrabajo = (tipo, tiposTrabajos) => {
   if (tipo === 1) {
-    return 400;
+    return tiposTrabajos[0].precio;
   } else {
     if (tipo === 2) {
-      return 200;
+      return tiposTrabajos[1].precio;
     } else {
       return 0;
     }

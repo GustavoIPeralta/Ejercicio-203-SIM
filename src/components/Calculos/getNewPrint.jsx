@@ -1,6 +1,11 @@
 import { getTiempoImpresion } from "../../utils/utils";
 
-export const getNewImpresion = async (tipoTrabajo, lastVector, copyVectors) => {
+export const getNewImpresion = async (
+  tipoTrabajo,
+  lastVector,
+  copyVectors,
+  distribImpresion
+) => {
   let stateOccupied =
     lastVector.estados.prensa1 === "Ocupada" &&
     lastVector.estados.prensa2 === "Ocupada"
@@ -120,7 +125,11 @@ export const getNewImpresion = async (tipoTrabajo, lastVector, copyVectors) => {
     let newTipoTrabajo =
       tipoTrabajo === "Tipo 1" ? 1 : tipoTrabajo === "Tipo 2" ? 2 : null;
     rndImpresion = Math.random().toFixed(2);
-    tiempoImpresion = getTiempoImpresion(rndImpresion);
+    tiempoImpresion = getTiempoImpresion(
+      rndImpresion,
+      distribImpresion.min,
+      distribImpresion.max
+    );
     return {
       rnd: rndImpresion,
       tiempo: tiempoImpresion,

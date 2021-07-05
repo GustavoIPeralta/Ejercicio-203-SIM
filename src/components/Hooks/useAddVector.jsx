@@ -13,33 +13,42 @@ const useAddVector = () => {
     setVectores(initialData);
   }, []);
 
-  const getSimulation = async () => {
+  const getSimulation = async (distribImpresion, tiposTrabajos, diasSim) => {
     let copyVectors = vectores.slice();
-
-    for (let i = 0; i < 20; i++) {
-      let newVector = await addNewVector(copyVectors);
+    let fin = diasSim * 5;
+    for (let i = 0; i < fin; i++) {
+      let newVector = await addNewVector(
+        copyVectors,
+        distribImpresion,
+        tiposTrabajos
+      );
 
       copyVectors.push(newVector);
     }
     setVectores(copyVectors);
   };
 
-  const addNewVector = async (copyVectors) => {
+  const addNewVector = async (copyVectors, distribImpresion, tiposTrabajos) => {
     let lastVector = [...copyVectors].pop();
 
     let rndTipo = Math.random().toFixed(2);
-    let tipoTrabajo = getTipoTrabajo(rndTipo);
+    let tipoTrabajo = getTipoTrabajo(rndTipo, tiposTrabajos);
 
     //Nuevos datos
     let newImpresion = await getNewImpresion(
       tipoTrabajo,
       lastVector,
-      copyVectors
+      copyVectors,
+      distribImpresion
     );
 
     let newEstados = await getNewEstados(tipoTrabajo, lastVector, copyVectors);
 
-    let newUtilidad = await getNewUtilidad(lastVector, copyVectors);
+    let newUtilidad = await getNewUtilidad(
+      lastVector,
+      copyVectors,
+      tiposTrabajos
+    );
 
     let newData = {
       id: copyVectors.length,
