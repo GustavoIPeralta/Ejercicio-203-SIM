@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Grid, Card, Button } from "@material-ui/core";
 import ReportTable from "./Report/ReportTable";
 import useAddVector from "./Hooks/useAddVector";
+import { initialData } from "../utils/utils";
 
 export default function Principal({}) {
   const [columns, setColumns] = useState([
@@ -24,7 +25,7 @@ export default function Principal({}) {
     "Diaria",
     "Acumulada",
   ]);
-  const { vectores, loading, getSimulation } = useAddVector();
+  const { vectores, loading, getSimulation, setVectores } = useAddVector();
   const [generateSimulacion, setGenerateSimulacion] = useState(false);
 
   useEffect(() => {
@@ -59,7 +60,10 @@ export default function Principal({}) {
         <Button
           variant="contained"
           color="primary"
-          onClick={() => setGenerateSimulacion(true)}
+          onClick={() => {
+            setVectores(initialData);
+            setGenerateSimulacion(true);
+          }}
         >
           Simular
         </Button>

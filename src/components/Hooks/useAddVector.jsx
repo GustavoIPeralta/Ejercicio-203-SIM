@@ -53,7 +53,7 @@ const useAddVector = () => {
     return newData;
   };
 
-  return { vectores, loading, getSimulation };
+  return { vectores, loading, getSimulation, setVectores };
 };
 
 export default useAddVector;
