@@ -36,6 +36,7 @@ export default function Principal({}) {
   ]);
   const [diasSim, setDiasSim] = useState(100);
   const [aceptTipo2, setAceptTipo2] = useState(true);
+  const [rango, setRango] = useState({ i: null, j: null });
 
   useEffect(() => {
     if (generateSimulacion) {
@@ -74,16 +75,41 @@ export default function Principal({}) {
           inputProps={{ "aria-label": "secondary checkbox" }}
         />
         <br></br>
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={() => {
-            setVectores(initialData);
-            setGenerateSimulacion(true);
-          }}
-        >
-          Simular
-        </Button>
+        <Grid container>
+          <Grid item xs={4}></Grid>
+          <Grid item xs={4}>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => {
+                setVectores(initialData);
+                setGenerateSimulacion(true);
+              }}
+            >
+              Simular
+            </Button>
+          </Grid>
+          <Grid item xs={4}>
+            <label> Rango: </label>
+            <label> i: </label>
+            <input
+              value={rango.i}
+              style={{ width: "15%", textAlign: "center" }}
+              onChange={(e) =>
+                setRango({ ...rango, i: Number(e.target.value) })
+              }
+            ></input>
+            <label> --- </label>
+            <label> j: </label>
+            <input
+              value={rango.j}
+              style={{ width: "15%", textAlign: "center" }}
+              onChange={(e) =>
+                setRango({ ...rango, j: Number(e.target.value) })
+              }
+            ></input>
+          </Grid>
+        </Grid>
       </Grid>
 
       <Grid item xs={12} style={{ textAlign: "center" }}>
@@ -92,6 +118,7 @@ export default function Principal({}) {
           columns={columns}
           subColumns={subColumns}
           loading={loading}
+          rango={rango}
         />
       </Grid>
     </Grid>
